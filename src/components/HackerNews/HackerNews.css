@@ -5,24 +5,30 @@
   -webkit-text-stroke: 1px #554ba0;
 }
 
+/* *************** */
+
+/* Landing  */
+
+/* *************** */
+
+.b-landing {
+  padding: 1.5rem;
+  font-family: Lobster;
+}
 
 .b-landing__subwrapper {
-  font-family: Lobster;
   display: flex;
   flex-wrap: wrap;
   background-color: green;
+  justify-content: center;
+  align-items: center;
 }
 
 .b-landing__category {
-  flex: 1 0 0;
-  min-width: 240px;
+  width: 300px;
   cursor: pointer;
-  /* background-color: darkcyan; */
+  margin: 1rem;
   position: relative;
-}
-
-.b-landing__category-img {
-  filter: blur(1.1px);
 }
 
 .b-landing__category-title {
@@ -30,5 +36,5 @@
   font-size: 5rem;
   color: white;
   top: 0px;
-  /* left: */
+  left: calc(1rem + 3vw);
 }
