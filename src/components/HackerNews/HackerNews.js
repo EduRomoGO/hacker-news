@@ -67,6 +67,17 @@ const HackerNews = () => {
       };
     });
   };
+  const setIdListInState = (idList, category) => {
+    setStories(state => {
+      return {
+        ...state,
+        [category]: {
+          ...state[category],
+          idList: [...new Set(idList)],
+        }
+      };
+    });
+  };
 
   const selectIdsToSearch = (idList, stories, category) => {
     const categoryStoriesIdList = stories[category].articleList.map(item => item.id);
@@ -76,7 +87,11 @@ const HackerNews = () => {
 
   const loadMoreStories = ({ nextPage, category, stories }) => {
     getIdsList(category, stories)
-      .then(({ data: idList }) => selectIdsToSearch(idList, stories, category))
+      .then(({ data: idList }) => {
+        setIdListInState(idList, category);
+        return idList;
+      })
+      .then(idList => selectIdsToSearch(idList, stories, category))
       .then(idList => loadNextStories(idList))
       .then(res => res.map(item => item.data))
       .then(stories => setStoriesInState(stories, category))
@@ -84,13 +99,19 @@ const HackerNews = () => {
 
 
   const renderList = (category, stories) => {
-    const hasMore = stories[category].articleList.length < stories[category].idList.length;
+    const hasMore = (stories, category) => {
+      if (stories[category].articleList.length === 0) {
+        return true;
+      } else {
+        return stories[category].articleList.length < stories[category].idList.length;
+      }
+    }
 
     return <section className='b-stories'>
       <InfiniteScroll
         dataLength={stories[category].articleList.length}
         next={() => loadMoreStories({category, stories})}
-        hasMore={true}
+        hasMore={hasMore(stories, category)}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: 'center' }}>
