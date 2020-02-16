@@ -7,22 +7,31 @@ import topImg from '../../static/img/top.jpg';
 import anime from 'animejs/lib/anime.es.js';
 
 
-const baseUrl = 'https://hacker-news.firebaseio.com/v0/';
-// category : new top best
-// const searchUrl = `${baseUrl}${category}stories`;
+// const appConfig = {
+//   paginationItems: 10,
+// };
+const getBaseUrl = () => 'https://hacker-news.firebaseio.com/v0/';
+const getStoryUrl = ({baseUrl, id}) => `${baseUrl}item/${id}.json?print=pretty`;
 
+const loadNextStories = ({ data }) => {
+  return Promise.all(data.slice(0, 2).map(id => axios.get(getStoryUrl({baseUrl: getBaseUrl(), id}))));
+}
 
-const appConfig = {
-  paginationItems: 10,
-};
+const loadMoreStories = ({ nextPage, category, stories }) => {
+  const storiesIdsListUrl = `${getBaseUrl()}${category}stories.json?print=pretty`;
 
-const getMoreStories = ({ paginationItems, nextPage, category, state }) => {
+  axios.get(storiesIdsListUrl)
+    .then(loadNextStories)
+    .then(res => console.log(res));
+  // .catch(err => { throw new Error(err)});
   // nextPage * paginationItems
-  return // list
+
+  // return // list
 };
 
-const initialState = {
-  stories: {
+
+const HackerNews = () => {
+  const [stories, setStories] = useState({
     top: {
       idList: [],
       articleList: [],
@@ -35,21 +44,9 @@ const initialState = {
       idList: [],
       articleList: [],
     },
-  }
-};
-
-
-
-const HackerNews = () => {
+  });
   const [category, setCategory] = useState(undefined);
   useEffect(() => {
-    axios.get('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-      // axios.get('https://hacker-news.firebaseio.com/v0/')
-      .then(({ data }) => axios.get(`https://hacker-news.firebaseio.com/v0/item/${data[0]}.json?print=pretty`))
-      // .then(({data}) => axios.get(`https://hacker-news.firebaseio.com/v0/${data[0]}`))
-      .then(res => console.log(res))
-    // .catch(err => { throw new Error(err)});
-
     anime({
       targets: '.b-landing',
       translateY: [100, 0],
@@ -60,8 +57,13 @@ const HackerNews = () => {
 
   }, []);
 
+  const renderList = (category, stories) => {
+    return stories[category].articleList.map(item => <article key={item.id}>{item.id}</article>);
+  };
+
   const handleCategoryClick = (category) => {
     setCategory(category);
+    loadMoreStories({ stories, category });
   };
 
   const renderLanding = () => {
@@ -83,15 +85,13 @@ const HackerNews = () => {
     </section>
   };
 
-  // const renderList = (category, state) =>
-
   return <section className='c-hacker-news'>
     <header className='c-hacker-news__header'>
       <h1>Hacker News</h1>
     </header>
     <section className='c-hacker-news__main'>
       <section className='c-hacker-news__browser'>
-        {category ? '' : renderLanding()}
+        {category ? renderList(category, stories) : renderLanding()}
       </section>
     </section>
   </section>
