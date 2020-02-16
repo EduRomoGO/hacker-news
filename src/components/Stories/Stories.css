@@ -7,6 +7,7 @@
 
 .b-stories__subwrapper {
   display: flex;
+  justify-content: center;
 }
 
 .b-stories__button-other-wrapper {
@@ -44,6 +45,7 @@
 .b-stories__item-title {
   flex: 1 0 85%;
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .b-stories__item-content {
