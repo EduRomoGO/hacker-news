@@ -48,7 +48,7 @@ const HackerNews = () => {
       easing: 'easeInOutQuad',
     });
 
-  }, []);
+  });
 
 
   const setStoriesInState = (stories, category) => {
@@ -97,13 +97,21 @@ const HackerNews = () => {
     loadMoreStories({ stories, category });
   };
 
+  const onChangeCategoryClick = () => {
+    setCategory(undefined);
+  }
+
   return <section className='c-hacker-news'>
     <header className='c-hacker-news__header'>
       <h1>Hacker News</h1>
     </header>
     <section className='c-hacker-news__main'>
       <section className='c-hacker-news__browser'>
-        {category ? <Stories category={category} stories={stories} loadMoreStories={loadMoreStories} /> : <Landing onCategoryClick={handleCategoryClick} />}
+        {
+          category
+            ? <Stories onChangeCategoryClick={onChangeCategoryClick} category={category} stories={stories} loadMoreStories={loadMoreStories} />
+            : <Landing onCategoryClick={handleCategoryClick} />
+        }
       </section>
     </section>
   </section>

@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import './Stories.css';
 import Spinner from '../Spinner/Spinner.js';
 
-const Stories = ({ category, stories, loadMoreStories }) => {
+const Stories = ({ category, stories, loadMoreStories, onChangeCategoryClick }) => {
   const renderItem = ({ id, title, url, score, by }) => {
     return <article className='b-stories__item' key={id}>
       <header className='b-stories__item-header'>
@@ -33,7 +33,7 @@ const Stories = ({ category, stories, loadMoreStories }) => {
 
   return <section className='b-stories'>
     <div className='b-stories__button-other-wrapper'>
-    <button className='b-stories__button-other button button--salmon'>Change Category</button>
+    <button onClick={onChangeCategoryClick} className='b-stories__button-other button button--salmon'>Change Category</button>
     </div>
     <div className='b-stories__subwrapper'>
       <InfiniteScroll
