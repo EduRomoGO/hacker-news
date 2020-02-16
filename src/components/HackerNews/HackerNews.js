@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './HackerNews.css';
 import anime from 'animejs/lib/anime.es.js';
 import Landing from '../Landing/Landing.js';
 import Stories from '../Stories/Stories.js';
-
-const getBaseUrl = () => 'https://hacker-news.firebaseio.com/v0/';
-const getStoryUrl = ({ baseUrl, id }) => `${baseUrl}item/${id}.json?print=pretty`;
-
-const loadNextStories = idList => {
-  return Promise.all(idList.slice(0, 20).map(id => axios.get(getStoryUrl({ baseUrl: getBaseUrl(), id }))));
-}
-
-const getIdsList = (category, stories) => {
-  const storiesIdsListUrl = `${getBaseUrl()}${category}stories.json?print=pretty`;
-
-  if (stories[category].idList.length) {
-    return Promise.resolve({ data: stories[category].idList });
-  } else {
-    return axios.get(storiesIdsListUrl);
-  }
-};
+import { loadMoreData } from '../../util/dataProvider.js';
 
 
 const HackerNews = () => {
@@ -50,46 +33,15 @@ const HackerNews = () => {
 
   });
 
-
-  const setStoriesInState = (stories, category) => {
-    setStories(state => {
-      return {
-        ...state,
-        [category]: {
-          ...state[category],
-          articleList: [...state[category].articleList, ...stories]
-        }
-      };
-    });
-  };
-  const setIdListInState = (idList, category) => {
-    setStories(state => {
-      return {
-        ...state,
-        [category]: {
-          ...state[category],
-          idList: [...new Set(idList)],
-        }
-      };
-    });
-  };
-
-  const selectIdsToSearch = (idList, stories, category) => {
-    const categoryStoriesIdList = stories[category].articleList.map(item => item.id);
-
-    return idList.filter(id => !categoryStoriesIdList.includes(id));
-  };
+  const setCategoryData = (categoryData, category) => {
+    setStories(state => ({...state, [category]: categoryData }));
+  }
 
   const loadMoreStories = ({ category, stories }) => {
-    getIdsList(category, stories)
-      .then(({ data: idList }) => {
-        setIdListInState(idList, category);
-        return idList;
+    loadMoreData(category, stories)
+      .then((categoryData) => {
+        setCategoryData(categoryData, category);
       })
-      .then(idList => selectIdsToSearch(idList, stories, category))
-      .then(idList => loadNextStories(idList))
-      .then(res => res.map(item => item.data))
-      .then(stories => setStoriesInState(stories, category))
   };
 
   const handleCategoryClick = (category) => {
