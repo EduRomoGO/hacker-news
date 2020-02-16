@@ -1,10 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import HackerNews from './components/HackerNews/HackerNews.js';
 
 function App() {
   return (
     <div className="App">
+      <HackerNews />
     </div>
   );
 }
