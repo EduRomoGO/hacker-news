@@ -1,0 +1,29 @@
+.b-landing {
+  padding: 1.5rem;
+  font-family: Lobster;
+  opacity: 0;
+}
+
+.b-landing__subwrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.b-landing__category {
+  width: 300px;
+  cursor: pointer;
+  margin: 1rem;
+  position: relative;
+  border-radius: 10px;
+  border: 8px solid #315e6c;
+}
+
+.b-landing__category-title {
+  position: absolute;
+  font-size: 5rem;
+  color: white;
+  top: 0px;
+  left: calc(1rem + 3vw);
+}

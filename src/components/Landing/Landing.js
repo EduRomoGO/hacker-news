@@ -2,6 +2,7 @@ import React from 'react';
 import bestImg from '../../static/img/best.jpg';
 import newImg from '../../static/img/new.jpg';
 import topImg from '../../static/img/top.jpg';
+import './Landing.css';
 
 const Landing = ({onCategoryClick}) => {
   return <section className='b-landing'>
