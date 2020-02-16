@@ -1,5 +1,6 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import './Stories.css';
 
 const Stories = ({ category, stories, loadMoreStories }) => {
   const renderItem = ({ id, title, url, score, by }) => {
