@@ -10,11 +10,11 @@ const Stories = ({ category, stories, loadMoreStories }) => {
         <div className='b-stories__item-title'>{title}</div>
         <div className='b-stories__item-score'><div className='b-stories__item-score-value'>{score}</div></div>
       </header>
-      <section>
-        <div className='b-stories__item-url'>{url}</div>
+      <section className='b-stories__item-content'>
+        <div className='b-stories__item-url'>Source: <a href={url}>{url}</a></div>
       </section>
       <footer className='b-stories__item-footer'>
-        <div className='b-stories__item-by'>{by}</div>
+        <div className='b-stories__item-by'>By: {by}</div>
       </footer>
     </article>;
   };
