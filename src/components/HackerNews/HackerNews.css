@@ -1,0 +1,33 @@
+.c-hacker-news__header {
+  background-color: #bbbbea;
+  padding: 1.5rem;
+  color: white;
+  -webkit-text-stroke: 1px #554ba0;
+}
+
+
+.b-landing__subwrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: green;
+}
+
+.b-landing__category {
+  flex: 1 0 0;
+  min-width: 240px;
+  cursor: pointer;
+  /* background-color: darkcyan; */
+  position: relative;
+}
+
+.b-landing__category-img {
+  filter: blur(1.1px);
+}
+
+.b-landing__category-title {
+  font-family: Pacifico;
+  position: absolute;
+  font-size: 5rem;
+  color: white;
+  top: 0px;
+}

@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './reset.css';
+import './static/fonts/Lobster-Regular.ttf'
+import './static/fonts/Pacifico-Regular.ttf'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
