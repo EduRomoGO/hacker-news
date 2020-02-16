@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './reset.css';
+import './buttons.css';
 import './static/fonts/Lobster-Regular.ttf'
 import './static/fonts/Pacifico-Regular.ttf'
 import App from './App';

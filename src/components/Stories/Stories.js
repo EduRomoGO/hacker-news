@@ -27,24 +27,29 @@ const Stories = ({ category, stories, loadMoreStories }) => {
     }
   }
 
-  const missingInfo = ({title, url, by, score}) => {
+  const missingInfo = ({ title, url, by, score }) => {
     return title && url && by && score;
   };
 
   return <section className='b-stories'>
-    <InfiniteScroll
-      className='b-stories__infinite-scroll'
-      dataLength={stories[category].articleList.length}
-      next={() => loadMoreStories({ category, stories })}
-      hasMore={hasMore(stories, category)}
-      loader={<Spinner />}
-      endMessage={
-        <p style={{ textAlign: 'center' }}>
-          <b>Yay! You have seen it all</b>
-        </p>
-      }>
-      {stories[category].articleList.filter(missingInfo).map(item => renderItem(item))}
-    </InfiniteScroll>
+    <div className='b-stories__button-other-wrapper'>
+    <button className='b-stories__button-other button button--salmon'>Change Category</button>
+    </div>
+    <div className='b-stories__subwrapper'>
+      <InfiniteScroll
+        className='b-stories__infinite-scroll'
+        dataLength={stories[category].articleList.length}
+        next={() => loadMoreStories({ category, stories })}
+        hasMore={hasMore(stories, category)}
+        loader={<Spinner />}
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }>
+        {stories[category].articleList.filter(missingInfo).map(item => renderItem(item))}
+      </InfiniteScroll>
+    </div>
   </section>
 };
 

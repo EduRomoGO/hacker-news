@@ -103,7 +103,7 @@ const HackerNews = () => {
     </header>
     <section className='c-hacker-news__main'>
       <section className='c-hacker-news__browser'>
-        {category ? <Stories category={category} stories={stories} loadMoreStories={loadMoreStories} /> : <Landing onCategoryClick={handleCategoryClick}/>}
+        {category ? <Stories category={category} stories={stories} loadMoreStories={loadMoreStories} /> : <Landing onCategoryClick={handleCategoryClick} />}
       </section>
     </section>
   </section>
