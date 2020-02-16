@@ -3,6 +3,11 @@
   src: local('Pacifico'), url('./static/fonts/Pacifico-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Lobster';
+  src: local('Lobster'), url('./static/fonts/Lobster-Regular.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

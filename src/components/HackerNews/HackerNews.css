@@ -7,6 +7,7 @@
 
 
 .b-landing__subwrapper {
+  font-family: Lobster;
   display: flex;
   flex-wrap: wrap;
   background-color: green;
@@ -25,9 +26,9 @@
 }
 
 .b-landing__category-title {
-  font-family: Pacifico;
   position: absolute;
   font-size: 5rem;
   color: white;
   top: 0px;
+  /* left: */
 }
