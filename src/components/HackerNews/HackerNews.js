@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './HackerNews.css';
-import bestImg from '../../static/img/best.jpg';
-import newImg from '../../static/img/new.jpg';
-import topImg from '../../static/img/top.jpg';
 import anime from 'animejs/lib/anime.es.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Landing from '../Landing/Landing.js';
 
-// const appConfig = {
-//   paginationItems: 10,
-// };
 const getBaseUrl = () => 'https://hacker-news.firebaseio.com/v0/';
 const getStoryUrl = ({ baseUrl, id }) => `${baseUrl}item/${id}.json?print=pretty`;
 
@@ -144,24 +139,7 @@ const HackerNews = () => {
     loadMoreStories({ stories, category });
   };
 
-  const renderLanding = () => {
-    return <section className='b-landing'>
-      <div className='b-landing__subwrapper'>
-        <article onClick={() => handleCategoryClick('top')} className='b-landing__category b-landing__category-top'>
-          <img className='b-landing__category-img' src={topImg} alt="top category img" />
-          <div className='b-landing__category-title'>Top</div>
-        </article>
-        <article onClick={() => handleCategoryClick('new')} className='b-landing__category b-landing__category-new'>
-          <img className='b-landing__category-img' src={newImg} alt="new category img" />
-          <div className='b-landing__category-title'>New</div>
-        </article>
-        <article onClick={() => handleCategoryClick('best')} className='b-landing__category b-landing__category-best'>
-          <img className='b-landing__category-img' src={bestImg} alt="Best category img" />
-          <div className='b-landing__category-title'>Best</div>
-        </article>
-      </div>
-    </section>
-  };
+
 
   return <section className='c-hacker-news'>
     <header className='c-hacker-news__header'>
@@ -169,7 +147,7 @@ const HackerNews = () => {
     </header>
     <section className='c-hacker-news__main'>
       <section className='c-hacker-news__browser'>
-        {category ? renderList(category, stories) : renderLanding()}
+        {category ? renderList(category, stories) : <Landing onCategoryClick={handleCategoryClick}/>}
       </section>
     </section>
   </section>
