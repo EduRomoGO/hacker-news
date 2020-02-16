@@ -102,7 +102,7 @@ const HackerNews = () => {
     return <article className='b-stories__item' key={id}>
       <header className='b-stories__item-header'>
         <div className='b-stories__item-title'>{title}</div>
-        <div className='b-stories__item-score'>{score}</div>
+        <div className='b-stories__item-score'><div className='b-stories__item-score-value'>{score}</div></div>
       </header>
       <section>
         <div className='b-stories__item-url'>{url}</div>
@@ -124,10 +124,11 @@ const HackerNews = () => {
 
     return <section className='b-stories'>
       <InfiniteScroll
+        className='b-stories__infinite-scroll'
         dataLength={stories[category].articleList.length}
         next={() => loadMoreStories({ category, stories })}
         hasMore={hasMore(stories, category)}
-        loader={<h4>Loading...</h4>}
+        loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: 'center' }}>
             <b>Yay! You have seen it all</b>
