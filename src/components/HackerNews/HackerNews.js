@@ -84,11 +84,13 @@ const HackerNews = () => {
 
 
   const renderList = (category, stories) => {
+    const hasMore = stories[category].articleList.length < stories[category].idList.length;
+
     return <section className='b-stories'>
       <InfiniteScroll
         dataLength={stories[category].articleList.length}
-        next={() => loadMoreStories(category, stories)}
-        hasMore={stories[category].articleList.length < stories[category].idList.length}
+        next={() => loadMoreStories({category, stories})}
+        hasMore={true}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: 'center' }}>
