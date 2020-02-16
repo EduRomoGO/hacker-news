@@ -13,20 +13,18 @@ import anime from 'animejs/lib/anime.es.js';
 const getBaseUrl = () => 'https://hacker-news.firebaseio.com/v0/';
 const getStoryUrl = ({baseUrl, id}) => `${baseUrl}item/${id}.json?print=pretty`;
 
-const loadNextStories = ({ data }) => {
-  return Promise.all(data.slice(0, 2).map(id => axios.get(getStoryUrl({baseUrl: getBaseUrl(), id}))));
+const loadNextStories = idList => {
+  return Promise.all(idList.slice(0, 2).map(id => axios.get(getStoryUrl({baseUrl: getBaseUrl(), id}))));
 }
 
-const loadMoreStories = ({ nextPage, category, stories }) => {
+const getIdsList = (category, stories) => {
   const storiesIdsListUrl = `${getBaseUrl()}${category}stories.json?print=pretty`;
 
-  axios.get(storiesIdsListUrl)
-    .then(loadNextStories)
-    .then(res => console.log(res));
-  // .catch(err => { throw new Error(err)});
-  // nextPage * paginationItems
-
-  // return // list
+  if (stories[category].idList.length) {
+    return Promise.resolve({ data: stories[category].idList});
+  } else {
+    return axios.get(storiesIdsListUrl);
+  }
 };
 
 
@@ -56,6 +54,31 @@ const HackerNews = () => {
     });
 
   }, []);
+
+
+  const setStoriesInState = (stories, category) => {
+    setStories(state => {
+      return {
+        ...state,
+        [category]: {
+          ...state[category],
+          articleList: [...state[category].articleList, ...stories ]
+        }
+      };
+    });
+  };
+
+  const loadMoreStories = ({ nextPage, category, stories }) => {
+    getIdsList(category, stories)
+      .then(({ data }) => loadNextStories(data))
+      .then(res => res.map(item => item.data))
+      .then(stories => setStoriesInState(stories, category))
+    // .catch(err => { throw new Error(err)});
+    // nextPage * paginationItems
+
+    // return // list
+  };
+
 
   const renderList = (category, stories) => {
     return stories[category].articleList.map(item => <article key={item.id}>{item.id}</article>);
