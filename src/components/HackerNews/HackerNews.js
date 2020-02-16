@@ -80,7 +80,7 @@ const HackerNews = () => {
     return idList.filter(id => !categoryStoriesIdList.includes(id));
   };
 
-  const loadMoreStories = ({ nextPage, category, stories }) => {
+  const loadMoreStories = ({ category, stories }) => {
     getIdsList(category, stories)
       .then(({ data: idList }) => {
         setIdListInState(idList, category);

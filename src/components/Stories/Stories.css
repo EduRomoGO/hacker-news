@@ -26,6 +26,7 @@
 
 .b-stories__item-title {
   flex: 1 0 85%;
+  font-weight: bold;
 }
 
 .b-stories__item-score {
@@ -45,4 +46,11 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+}
+
+
+.b-stories__item-footer {
+  padding: 1.5rem 0 0 0;
+  font-weight: 600;
+  font-size: 0.9rem;
 }

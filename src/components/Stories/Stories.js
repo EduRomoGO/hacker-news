@@ -1,6 +1,7 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './Stories.css';
+import Spinner from '../Spinner/Spinner.js';
 
 const Stories = ({ category, stories, loadMoreStories }) => {
   const renderItem = ({ id, title, url, score, by }) => {
@@ -12,7 +13,7 @@ const Stories = ({ category, stories, loadMoreStories }) => {
       <section>
         <div className='b-stories__item-url'>{url}</div>
       </section>
-      <footer>
+      <footer className='b-stories__item-footer'>
         <div className='b-stories__item-by'>{by}</div>
       </footer>
     </article>;
@@ -26,6 +27,9 @@ const Stories = ({ category, stories, loadMoreStories }) => {
     }
   }
 
+  const missingInfo = ({title, url, by, score}) => {
+    return title && url && by && score;
+  };
 
   return <section className='b-stories'>
     <InfiniteScroll
@@ -33,13 +37,13 @@ const Stories = ({ category, stories, loadMoreStories }) => {
       dataLength={stories[category].articleList.length}
       next={() => loadMoreStories({ category, stories })}
       hasMore={hasMore(stories, category)}
-      loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+      loader={<Spinner />}
       endMessage={
         <p style={{ textAlign: 'center' }}>
           <b>Yay! You have seen it all</b>
         </p>
       }>
-      {stories[category].articleList.map(item => renderItem(item))}
+      {stories[category].articleList.filter(missingInfo).map(item => renderItem(item))}
     </InfiniteScroll>
   </section>
 };
