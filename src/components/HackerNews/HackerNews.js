@@ -5,23 +5,23 @@ import bestImg from '../../static/img/best.jpg';
 import newImg from '../../static/img/new.jpg';
 import topImg from '../../static/img/top.jpg';
 import anime from 'animejs/lib/anime.es.js';
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // const appConfig = {
 //   paginationItems: 10,
 // };
 const getBaseUrl = () => 'https://hacker-news.firebaseio.com/v0/';
-const getStoryUrl = ({baseUrl, id}) => `${baseUrl}item/${id}.json?print=pretty`;
+const getStoryUrl = ({ baseUrl, id }) => `${baseUrl}item/${id}.json?print=pretty`;
 
 const loadNextStories = idList => {
-  return Promise.all(idList.slice(0, 2).map(id => axios.get(getStoryUrl({baseUrl: getBaseUrl(), id}))));
+  return Promise.all(idList.slice(0, 20).map(id => axios.get(getStoryUrl({ baseUrl: getBaseUrl(), id }))));
 }
 
 const getIdsList = (category, stories) => {
   const storiesIdsListUrl = `${getBaseUrl()}${category}stories.json?print=pretty`;
 
   if (stories[category].idList.length) {
-    return Promise.resolve({ data: stories[category].idList});
+    return Promise.resolve({ data: stories[category].idList });
   } else {
     return axios.get(storiesIdsListUrl);
   }
@@ -62,26 +62,42 @@ const HackerNews = () => {
         ...state,
         [category]: {
           ...state[category],
-          articleList: [...state[category].articleList, ...stories ]
+          articleList: [...state[category].articleList, ...stories]
         }
       };
     });
   };
 
+  const selectIdsToSearch = (idList, stories, category) => {
+    const categoryStoriesIdList = stories[category].articleList.map(item => item.id);
+
+    return idList.filter(id => !categoryStoriesIdList.includes(id));
+  };
+
   const loadMoreStories = ({ nextPage, category, stories }) => {
     getIdsList(category, stories)
-      .then(({ data }) => loadNextStories(data))
+      .then(({ data: idList }) => selectIdsToSearch(idList, stories, category))
+      .then(idList => loadNextStories(idList))
       .then(res => res.map(item => item.data))
       .then(stories => setStoriesInState(stories, category))
-    // .catch(err => { throw new Error(err)});
-    // nextPage * paginationItems
-
-    // return // list
   };
 
 
   const renderList = (category, stories) => {
-    return stories[category].articleList.map(item => <article key={item.id}>{item.id}</article>);
+    return <section className='b-stories'>
+      <InfiniteScroll
+        dataLength={stories[category].articleList.length}
+        next={() => loadMoreStories(category, stories)}
+        hasMore={stories[category].articleList.length < stories[category].idList.length}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }>
+        {stories[category].articleList.map(item => <article className='b-stories__item' key={item.id}>{item.id}</article>)}
+      </InfiniteScroll>
+    </section>
   };
 
   const handleCategoryClick = (category) => {

@@ -40,3 +40,11 @@
   top: 0px;
   left: calc(1rem + 3vw);
 }
+
+
+
+
+
+.b-stories__item {
+  padding: 1rem;
+}
