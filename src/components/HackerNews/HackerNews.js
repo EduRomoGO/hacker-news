@@ -4,6 +4,8 @@ import './HackerNews.css';
 import bestImg from '../../static/img/best.jpg';
 import newImg from '../../static/img/new.jpg';
 import topImg from '../../static/img/top.jpg';
+import anime from 'animejs/lib/anime.es.js';
+
 
 const baseUrl = 'https://hacker-news.firebaseio.com/v0/';
 // category : new top best
@@ -47,6 +49,15 @@ const HackerNews = () => {
       // .then(({data}) => axios.get(`https://hacker-news.firebaseio.com/v0/${data[0]}`))
       .then(res => console.log(res))
     // .catch(err => { throw new Error(err)});
+
+    anime({
+      targets: '.b-landing',
+      translateY: [100, 0],
+      opacity: [0, 1],
+      duration: 800,
+      easing: 'easeInOutQuad',
+    });
+
   }, []);
 
   const handleCategoryClick = (category) => {

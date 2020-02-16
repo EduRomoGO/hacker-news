@@ -14,6 +14,7 @@
 .b-landing {
   padding: 1.5rem;
   font-family: Lobster;
+  opacity: 0;
 }
 
 .b-landing__subwrapper {
