@@ -19,7 +19,6 @@
 .b-landing__subwrapper {
   display: flex;
   flex-wrap: wrap;
-  background-color: green;
   justify-content: center;
   align-items: center;
 }
@@ -29,6 +28,8 @@
   cursor: pointer;
   margin: 1rem;
   position: relative;
+  border-radius: 10px;
+  border: 8px solid black;
 }
 
 .b-landing__category-title {
