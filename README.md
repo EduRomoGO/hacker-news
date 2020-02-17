@@ -1,4 +1,4 @@
-# Battle Land
+# Hacker News
 
 ## Usage instructions 
 
